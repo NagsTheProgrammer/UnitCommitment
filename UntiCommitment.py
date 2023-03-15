@@ -16,14 +16,16 @@ def main():
     cost = {"fixed": [3, 1], "variable": [10, 20], "startUp": [5, 2], "shutDown": [1, 1]}
     # Line Power Flow Limitations
     line = {"maxApPow": [1, 1], "susceptance": [1, 1]}
+    # Hourly Load and Reserve for Hours [1, 2, 3, 4]
+    demand = {"load": [1, 0.9, 1.3, 1.5], "reserve": [0.1, 0.09, 0.13, 0.15]}
     # Hour Zero Power Output and Generating Status
     p1_0 = 0.7
     p2_0 = 0.6
     u1_0 = 1
     u2_0 = 0
-    # Hourly Demand for Hours [1, 2, 3, 4]
-    demand = {"demand": [1, 0.9, 1.3, 1.5]}
-    # Reserve Demand
+    # Bus Voltage and Angle Limits
+    busVoltageMagnitude = {"min": [0.95], "max": [1.1]}
+    busVoltageAngle = math.pi
 
     # MODEL
     model = ConcreteModel()
@@ -70,8 +72,54 @@ def main():
     model.z2_2 = Var(domain=Binary) # Unit 2 Shut-Down Status - Hour 2
     model.z2_3 = Var(domain=Binary) # Unit 2 Shut-Down Status - Hour 3
     model.z2_4 = Var(domain=Binary) # Unit 2 Shut-Down Status - Hour 4
+    
+    # Bus Voltage Magnitudes
+    model.v1_1 = Var(within=NonNegativeReals) # Bus 1 Voltage Magnitude - Hour 1
+    model.v2_1 = Var(within=NonNegativeReals) # Bus 2 Voltage Magnitude - Hour 1
+    model.v3_1 = Var(within=NonNegativeReals) # Bus 3 Voltage Magnitude - Hour 1
+    model.v1_2 = Var(within=NonNegativeReals) # Bus 1 Voltage Magnitude - Hour 2
+    model.v2_2 = Var(within=NonNegativeReals) # Bus 2 Voltage Magnitude - Hour 2
+    model.v3_2 = Var(within=NonNegativeReals) # Bus 3 Voltage Magnitude - Hour 2
+    model.v1_3 = Var(within=NonNegativeReals) # Bus 1 Voltage Magnitude - Hour 3
+    model.v2_3 = Var(within=NonNegativeReals) # Bus 2 Voltage Magnitude - Hour 3
+    model.v3_3 = Var(within=NonNegativeReals) # Bus 3 Voltage Magnitude - Hour 3
+    model.v1_4 = Var(within=NonNegativeReals) # Bus 1 Voltage Magnitude - Hour 4
+    model.v2_4 = Var(within=NonNegativeReals) # Bus 2 Voltage Magnitude - Hour 4
+    model.v3_4 = Var(within=NonNegativeReals) # Bus 3 Voltage Magnitude - Hour 4
+    
+    # Bus Voltage Angles
+    model.d1_1 = Var(within=NonNegativeReals) # Bus 1 Voltage Angle - Hour 1
+    model.d2_1 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 1
+    model.d3_1 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 1
+    model.d1_2 = Var(within=NonNegativeReals) # Bus 1 Voltage Angle - Hour 2
+    model.d2_2 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 2
+    model.d3_2 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 2
+    model.d1_3 = Var(within=NonNegativeReals) # Bus 1 Voltage Angle - Hour 3
+    model.d2_3 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 3
+    model.d3_3 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 3
+    model.d1_4 = Var(within=NonNegativeReals) # Bus 1 Voltage Angle - Hour 4
+    model.d2_4 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 4
+    model.d3_4 = Var(within=NonNegativeReals) # Bus 2 Voltage Angle - Hour 4
+    
+    # Line Flows
+    model.p13_1 = Var(within=Reals) # Line 13 Line Flow - Hour 1
+    model.p31_1 = Var(within=Reals) # Line 31 Line Flow - Hour 1
+    model.p12_1 = Var(within=Reals) # Line 12 Line Flow - Hour 1
+    model.p21_1 = Var(within=Reals) # Line 21 Line Flow - Hour 1
+    model.p13_2 = Var(within=Reals) # Line 13 Line Flow - Hour 2
+    model.p31_2 = Var(within=Reals) # Line 31 Line Flow - Hour 2
+    model.p12_2 = Var(within=Reals) # Line 12 Line Flow - Hour 2
+    model.p21_2 = Var(within=Reals) # Line 21 Line Flow - Hour 2
+    model.p13_3 = Var(within=Reals) # Line 13 Line Flow - Hour 3
+    model.p31_3 = Var(within=Reals) # Line 31 Line Flow - Hour 3
+    model.p12_3 = Var(within=Reals) # Line 12 Line Flow - Hour 3
+    model.p21_3 = Var(within=Reals) # Line 21 Line Flow - Hour 3
+    model.p13_4 = Var(within=Reals) # Line 13 Line Flow - Hour 4
+    model.p31_4 = Var(within=Reals) # Line 31 Line Flow - Hour 4
+    model.p12_4 = Var(within=Reals) # Line 12 Line Flow - Hour 4
+    model.p21_4 = Var(within=Reals) # Line 21 Line Flow - Hour 4
 
-    # OPF CONSTRAINTS
+    # UNIT COMMITMENT CONSTRAINTS
     # Start-Up Shut-Down Equality
     model.c1a = Constraint(expr=model.y1_1 - model.z1_1 == model.u1_1 - u1_0)       # Unit 1 Start-Up Shut-Down - Hour 1
     model.c1b = Constraint(expr=model.y1_2 - model.z1_2 == model.u1_2 - model.u1_1) # Unit 1 Start-Up Shut-Down - Hour 2
@@ -152,31 +200,21 @@ def main():
                                 power["shutDown"][1] * model.z2_4)  # Unit 2 Ramp-Down Limits - Hour 4
     
     # Hourly Power Balance
-    model.c13a = Constraint(expr=model.p1_1 + model.p2_1 == demand["demand"][0])  # Active Power Balance - Hour 1
-    model.c13b = Constraint(expr=model.p1_2 + model.p2_2 == demand["demand"][1])  # Active Power Balance - Hour 2
-    model.c13c = Constraint(expr=model.p1_3 + model.p2_3 == demand["demand"][2])  # Active Power Balance - Hour 3
-    model.c13d = Constraint(expr=model.p1_4 + model.p2_4 == demand["demand"][3])  # Active Power Balance - Hour 4    
+    model.c13a = Constraint(expr=model.p1_1 + model.p2_1 == demand["load"][0])  # Active Power Balance - Hour 1
+    model.c13b = Constraint(expr=model.p1_2 + model.p2_2 == demand["load"][1])  # Active Power Balance - Hour 2
+    model.c13c = Constraint(expr=model.p1_3 + model.p2_3 == demand["load"][2])  # Active Power Balance - Hour 3
+    model.c13d = Constraint(expr=model.p1_4 + model.p2_4 == demand["load"][3])  # Active Power Balance - Hour 4
 
-    # Line Limits
-    # model.c14a = Constraint(expr=model.p1_1 + demand["demand"][0] - model.p2_1 <= line["maxApPow"]) # Line 1-3 Flow Limits - Hour 1
-    # model.c14b = Constraint(expr=model.p1_1 + demand["demand"][0] - model.p2_1 >= -line["maxApPow"]) # Line 3-1 Flow Limits - Hour 1
-    # model.c14c = Constraint(expr=model.p2_1 + demand["demand"][0] - model.p1_1 <= line["maxApPow"]) # Line 1-2 Flow Limits - Hour 1
-    # model.c14d = Constraint(expr=model.p2_1 + demand["demand"][0] - model.p1_1 >= -line["maxApPow"]) # Line 2-1 Flow Limits - Hour 1
-    #
-    # model.c15a = Constraint(expr=model.p1_2 + demand["demand"][1] - model.p2_2 <= line["maxApPow"]) # Line 1-3 Flow Limits - Hour 2
-    # model.c15b = Constraint(expr=model.p1_2 + demand["demand"][1] - model.p2_2 >= -line["maxApPow"]) # Line 3-1 Flow Limits - Hour 2
-    # model.c15c = Constraint(expr=model.p2_2 + demand["demand"][1] - model.p1_2 <= line["maxApPow"]) # Line 1-2 Flow Limits - Hour 2
-    # model.c15d = Constraint(expr=model.p2_2 + demand["demand"][1] - model.p1_2 >= -line["maxApPow"]) # Line 2-1 Flow Limits - Hour 2
-    #
-    # model.c16a = Constraint(expr=model.p1_3 + demand["demand"][2] - model.p2_3 <= line["maxApPow"]) # Line 1-3 Flow Limits - Hour 3
-    # model.c16b = Constraint(expr=model.p1_3 + demand["demand"][2] - model.p2_3 >= -line["maxApPow"]) # Line 3-1 Flow Limits - Hour 3
-    # model.c16c = Constraint(expr=model.p2_3 + demand["demand"][2] - model.p1_3 <= line["maxApPow"]) # Line 1-2 Flow Limits - Hour 3
-    # model.c16d = Constraint(expr=model.p2_3 + demand["demand"][2] - model.p1_3 >= -line["maxApPow"]) # Line 2-1 Flow Limits - Hour 3
-    #
-    # model.c17a = Constraint(expr=model.p1_4 + demand["demand"][3] - model.p2_4 <= line["maxApPow"]) # Line 1-3 Flow Limits - Hour 4
-    # model.c17b = Constraint(expr=model.p1_4 + demand["demand"][3] - model.p2_4 >= -line["maxApPow"]) # Line 3-1 Flow Limits - Hour 4
-    # model.c17c = Constraint(expr=model.p2_4 + demand["demand"][3] - model.p1_4 <= line["maxApPow"]) # Line 1-2 Flow Limits - Hour 4
-    # model.c17d = Constraint(expr=model.p2_4 + demand["demand"][3] - model.p1_4 >= -line["maxApPow"]) # Line 2-1 Flow Limits - Hour 4
+    # Hourly Reserve Requirements
+    model.c14a = Constraint(expr=model.p1_1 + model.p2_1 + demand["reserve"][0] <= model.u1_1 * power["max"][0] + model.u2_1 * power["max"][1])
+    model.c14b = Constraint(expr=model.p1_2 + model.p2_2 + demand["reserve"][1] <= model.u1_2 * power["max"][0] + model.u2_2 * power["max"][1])
+    model.c14c = Constraint(expr=model.p1_3 + model.p2_3 + demand["reserve"][2] <= model.u1_3 * power["max"][0] + model.u2_3 * power["max"][1])
+    model.c14d = Constraint(expr=model.p1_4 + model.p2_4 + demand["reserve"][3] <= model.u1_4 * power["max"][0] + model.u2_4 * power["max"][1])
+
+    # # Line Limits
+    # model.c15a = Constraint(
+    #     expr=model.p12_1 == (model.v1_1 ** 2) * line["susceptance"][0] * cos(line[""][0]) - model.v1_1 * model.v2_1 *
+    #          line["admMag"][0] * cos(model.d1_1 - model.d2_1 - line["admAng"][0]))  # Line (12a) Active Power
 
     # OBJECTIVE FUNCTION
     model.obj = Objective(expr=
@@ -191,7 +229,7 @@ def main():
 
     # SOLVING
     model.pprint() # Printing Variable, Objective, and Constraint Declarations
-    opt = SolverFactory("gurobi") # Declaring Solver
+    opt = SolverFactory("ipopt") # Declaring Solver
     results = opt.solve(model) # Calling Optimizer to Solve Model
 
     # PRINTING RESULTS

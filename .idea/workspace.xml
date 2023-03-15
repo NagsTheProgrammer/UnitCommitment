@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/UntiCommitment.py" beforeDir="false" afterPath="$PROJECT_DIR$/UntiCommitment.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2N2B0IfheYDWShUIxuFgDLIZuES" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="UntiCommitment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="UnitCommitment" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/UntiCommitment.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.UntiCommitment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="" />
+      <created>1678852072108</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678852072108</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1678852152288">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852152288" />
+    <state x="740" y="271" key="FileChooserDialogImpl" timestamp="1678852321362">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="740" y="271" key="FileChooserDialogImpl/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852321362" />
+    <state width="1899" height="279" key="GridCell.Tab.0.bottom" timestamp="1678852574338">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.bottom/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
+    <state width="1899" height="279" key="GridCell.Tab.0.center" timestamp="1678852574338">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.center/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
+    <state width="1899" height="279" key="GridCell.Tab.0.left" timestamp="1678852574337">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.left/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574337" />
+    <state width="1899" height="279" key="GridCell.Tab.0.right" timestamp="1678852574338">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.right/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
+    <state x="461" y="161" key="SettingsEditor" timestamp="1678852119440">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="461" y="161" key="SettingsEditor/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852119440" />
+  </component>
+</project>
