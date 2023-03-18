@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -10,9 +13,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/UntiCommitment.py" beforeDir="false" afterPath="$PROJECT_DIR$/UntiCommitment.py" afterDir="false" />
-    </list>
+    <list default="true" id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,16 +22,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2N2B0IfheYDWShUIxuFgDLIZuES" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Sumedha/Documents/GitHub/UnitCommitment",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager">
     <configuration name="UntiCommitment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="UnitCommitment" />
@@ -44,6 +57,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/UntiCommitment.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -67,8 +81,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1678852072108</updated>
+      <workItem from="1678899487474" duration="10726000" />
+      <workItem from="1679000237144" duration="17699000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -81,34 +100,7 @@
       </map>
     </option>
   </component>
-  <component name="WindowStateProjectService">
-    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1678852152288">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="414" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852152288" />
-    <state x="740" y="271" key="FileChooserDialogImpl" timestamp="1678852321362">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="740" y="271" key="FileChooserDialogImpl/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852321362" />
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom" timestamp="1678852574338">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
-    <state width="1899" height="279" key="GridCell.Tab.0.center" timestamp="1678852574338">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.center/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
-    <state width="1899" height="279" key="GridCell.Tab.0.left" timestamp="1678852574337">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.left/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574337" />
-    <state width="1899" height="279" key="GridCell.Tab.0.right" timestamp="1678852574338">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.right/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852574338" />
-    <state x="461" y="161" key="SettingsEditor" timestamp="1678852119440">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="461" y="161" key="SettingsEditor/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1678852119440" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/UnitCommitment$UntiCommitment.coverage" NAME="UntiCommitment Coverage Results" MODIFIED="1679098969942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
