@@ -8,6 +8,7 @@ import pandas as pd
 import math
 import gnuplotpy as gp
 import itertools
+from DataPrep import *
 
 def main():
 
