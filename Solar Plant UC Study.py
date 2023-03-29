@@ -6,7 +6,6 @@ from pyomo.environ import*
 from pyomo.opt import SolverFactory
 import pandas as pd
 import math
-import gnuplotpy as gp
 import itertools
 from DataPrep import *
 
@@ -15,22 +14,35 @@ def main():
     # SYSTEM SETTINGS
     printSummary = True
 
+    # GETTING DATA
+    hourly_winter = getGenData('winter')
+    hourly_winter_sunday = hourly_winter[hourly_winter["Day"] == 'Sunday']
+    print(hourly_winter_sunday)
+
     # STATIC VARIABLES
     # Active Power Min and Max and Ramping Limits
-    power = {"min": [0.15, 0.2], "max": [1.5, 1.5], "rampDown": [0.2, 0.3], "rampUp": [0.2, 0.3], "shutDown": [0.2, 0.3], "startUp": [0.2, 0.3]}
+    power = {"min": [0.15, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0], "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]}
+    gen = {"UC3": hourly_winter_sunday["UC3"]}
+
     # Unit Costs
-    cost = {"fixed": [3, 1], "variable": [10, 20], "startUp": [5, 2], "shutDown": [1, 1]}
+    cost = {"fixed": [3, 1], "variable": [10, 20 ,0], "startUp": [5, 2, 0], "shutDown": [1, 1, 0]}
+
     # Line Power Flow Limitations
     line = {"maxApPow": [1, 1], "admMag": [1, 1]}
+
     # Hourly Load and Reserve for Hours [1, 2, 3, 4]
-    demand = {"load": [1, 0.9, 1.3, 1.5], "reserve": [0.1, 0.09, 0.13, 0.15]}
+    demand = {"load": hourly_winter_sunday["Load"]}
+    reserve = 0.1
+
     # Bus Voltage and Angle Limits
     busVoltage = {"angMin": [-math.pi], "angMax": [math.pi]}
+
     # Hour Zero Power Output and Generating Status
     p1_0 = 0.7
     p2_0 = 0.6
     u1_0 = 1
     u2_0 = 1
+    u3_0 = 1 # *** fix
     hours = len(demand["load"])
 
     # MODEL
@@ -45,18 +57,22 @@ def main():
     # Active Power Hourly Output
     model.p1 = Var(model.I, domain=NonNegativeReals) # Unit 1 Active Power Output
     model.p2 = Var(model.I, domain=NonNegativeReals) # Unit 2 Active Power Output
+    # model.p3 = Var(gen["UC3"], domain=NonNegativeReals) # Unit 3 Active Power Output
 
     # Unit Generating Status Binary Variables
     model.u1 = Var(model.I, domain=Binary) # Unit 1 Generating Status
     model.u2 = Var(model.I, domain=Binary) # Unit 2 Generating Status
+    # model.u3 = Var(model.I, domain=Binary) # Unit 3 Generating Status
 
     # Unit Start-Up Status Binary Variables
     model.y1 = Var(model.I, domain=Binary) # Unit 1 Start-Up Status
     model.y2 = Var(model.I, domain=Binary) # Unit 2 Start-Up Status
+    # model.y3 = Var(model.I, domain=Binary) # Unit 3 Start-Up Status
 
     # Unit Shut-Down Status Binary Variables
     model.z1 = Var(model.I, domain=Binary) # Unit 1 Shut-Down Status
     model.z2 = Var(model.I, domain=Binary) # Unit 2 Shut-Down Status
+    # model.z3 = Var(model.I, domain=Binary) # Unit 3 Shut-Down Status
     
     # Bus Voltage Angles
     model.d1 = Var(model.I, domain=Reals) # Bus 1 Voltage Angle
@@ -75,14 +91,17 @@ def main():
     # Start-Up Shut-Down Equality
     model.cons.add(expr=model.y1[0] - model.z1[0] == model.u1[0] - u1_0) # Unit 1 Start-Up Shut-Down Equality
     model.cons.add(expr=model.y2[0] - model.z2[0] == model.u2[0] - u2_0) # Unit 2 Start-Up Shut-Down Equality
+    # model.cons.add(expr=model.y3[0] - model.z3[0] == model.u3[0] - u3_0) # Unit 3 Start-Up Shut-Down Equality
     for i in range(1, hours):
         model.cons.add(expr=model.y1[i] - model.z1[i] == model.u1[i] - model.u1[i-1]) # Unit 1 Start-Up Shut-Down Equality
         model.cons.add(expr=model.y2[i] - model.z2[i] == model.u2[i] - model.u2[i-1]) # Unit 2 Start-Up Shut-Down Equality
+        # model.cons.add(expr=model.y3[i] - model.z3[i] == model.u3[i] - model.u3[i-1]) # Unit 3 Start-Up Shut-Down Equality
 
     # Start-Up Shut-Down Limit
     for i in range(hours):
         model.cons.add(expr=model.y1[i] + model.z1[i] <= 1) # Unit 1 Start-Up Shut-Down Limit
         model.cons.add(expr=model.y2[i] + model.z2[i] <= 1) # Unit 2 Start-Up Shut-Down Limit
+        # model.cons.add(expr=model.y3[i] + model.z3[i] <= 1) # Unit 2 Start-Up Shut-Down Limit
 
     # Active Power Limits
     for i in range(hours):
@@ -90,6 +109,8 @@ def main():
         model.cons.add(expr=model.p1[i] >= power["min"][0] * model.u1[i]) # Unit 1 Active Power Lower Limit
         model.cons.add(expr=model.p2[i] <= power["max"][1] * model.u2[i]) # Unit 2 Active Power Upper Limit
         model.cons.add(expr=model.p2[i] >= power["min"][1] * model.u2[i]) # Unit 2 Active Power Lower Limit
+        # model.cons.add(expr=model.p3[i] <= power["max"][1] * model.u3[i]) # Unit 3 Active Power Upper Limit
+        # model.cons.add(expr=model.p3[i] >= power["min"][1] * model.u3[i]) # Unit 3 Active Power Lower Limit
 
     # Ramp Up Limits
     model.cons.add(expr=model.p1[0] - p1_0 <= power["rampUp"][0] * u1_0 + power["startUp"][0] * model.y1[0]) # Unit 1 Ramp-Up Limits
@@ -107,7 +128,7 @@ def main():
 
     # Hourly Reserve Requirements
     for i in range(hours):
-        model.cons.add(expr=demand["load"][i] + demand["reserve"][i] <= model.u1[i] * power["max"][0] + model.u2[i] * power["max"][1]) # Hourly Reserve Requirement
+        model.cons.add(expr=demand["load"][i] + demand["load"][i] * reserve <= model.u1[i] * power["max"][0] + model.u2[i] * power["max"][1]) # Hourly Reserve Requirement
 
     # Line Flows
     for i in range(hours):
@@ -126,7 +147,7 @@ def main():
 
     # Line Flow Power Balance
     for i in range(hours):
-        model.cons.add(expr=model.p1[i] == model.p13[i]) # Bus 1 Flow Balance
+        model.cons.add(expr=model.p1[i] + gen["UC3"][i] == model.p13[i]) # Bus 1 Flow Balance
         model.cons.add(expr=model.p2[i] == model.p23[i]) # Bus 2 Flow Balance
         model.cons.add(expr=-demand["load"][i] == model.p32[i] + model.p31[i]) # Bus 3 Flow Balance
 
@@ -136,7 +157,8 @@ def main():
         model.cons.add(expr=model.p31[i] <= line["maxApPow"][0]) # Line 31 Line Limits
         model.cons.add(expr=model.p23[i] <= line["maxApPow"][1]) # Line 23 Line Limits
         model.cons.add(expr=model.p32[i] <= line["maxApPow"][1]) # Line 32 Line Limits
-    
+
+
     # OBJECTIVE FUNCTION
     model.obj = Objective(expr=
                           sum(cost["fixed"][0]*model.u1[i] + cost["variable"][0]*model.p1[i] + cost["startUp"][0]*model.y1[i] + cost["shutDown"][0]*model.z1[i] +

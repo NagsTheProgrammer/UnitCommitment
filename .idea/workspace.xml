@@ -13,20 +13,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DataPrep.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/UnitCommitment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UnitCommitment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solar Plant UC Study.py" beforeDir="false" afterPath="$PROJECT_DIR$/Solar Plant UC Study.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UC.txt" beforeDir="false" afterPath="$PROJECT_DIR$/UC.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UC_archive.py" beforeDir="false" afterPath="$PROJECT_DIR$/UC_archive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UntiCommitment.py" beforeDir="false" afterPath="$PROJECT_DIR$/UntiCommitment.py" afterDir="false" />
-    </list>
+    <list default="true" id="4df36ade-0e73-42d6-a480-85873462d345" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,11 +37,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="RunManager" selected="Python.DataPrep">
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RunManager" selected="Python.Solar Plant UC Study">
     <configuration name="DataPrep" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="UnitCommitment" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -67,6 +56,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataPrep.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -88,6 +78,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Solar Plant UC Study.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -109,6 +100,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/UC_archive.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -142,9 +134,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Solar Plant UC Study" />
         <item itemvalue="Python.DataPrep" />
         <item itemvalue="Python.UntiCommitment" />
-        <item itemvalue="Python.Solar Plant UC Study" />
         <item itemvalue="Python.UC_archive" />
       </list>
     </recent_temporary>
@@ -175,44 +167,10 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="740" y="271" key="FileChooserDialogImpl" timestamp="1679534827646">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="740" y="271" key="FileChooserDialogImpl/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679534827646" />
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom" timestamp="1679984567032">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom/-1920.493.1920.1032/0.0.1920.1032@-1920.493.1920.1032" timestamp="1679891715860" />
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679984567032" />
-    <state width="1899" height="279" key="GridCell.Tab.0.center" timestamp="1679984567032">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.center/-1920.493.1920.1032/0.0.1920.1032@-1920.493.1920.1032" timestamp="1679891715860" />
-    <state width="1899" height="279" key="GridCell.Tab.0.center/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679984567032" />
-    <state width="1899" height="279" key="GridCell.Tab.0.left" timestamp="1679984567032">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.left/-1920.493.1920.1032/0.0.1920.1032@-1920.493.1920.1032" timestamp="1679891715860" />
-    <state width="1899" height="279" key="GridCell.Tab.0.left/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679984567032" />
-    <state width="1899" height="279" key="GridCell.Tab.0.right" timestamp="1679984567032">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state width="1899" height="279" key="GridCell.Tab.0.right/-1920.493.1920.1032/0.0.1920.1032@-1920.493.1920.1032" timestamp="1679891715860" />
-    <state width="1899" height="279" key="GridCell.Tab.0.right/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679984567032" />
-    <state x="461" y="161" key="SettingsEditor" timestamp="1679329877119">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="461" y="161" key="SettingsEditor/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679329877119" />
-    <state x="953" y="0" width="974" height="1039" maximized="true" key="dock-window-1" timestamp="1679590555633">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="953" y="0" width="974" height="1039" maximized="true" key="dock-window-1/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679590555633" />
-    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1679517588140">
-      <screen x="0" y="0" width="1920" height="1032" />
-    </state>
-    <state x="623" y="223" width="672" height="678" key="search.everywhere.popup/-1920.493.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1679517588140" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/UnitCommitment$DataPrep.coverage" NAME="DataPrep Coverage Results" MODIFIED="1680068432363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UnitCommitment$UntiCommitment.coverage" NAME="UntiCommitment Coverage Results" MODIFIED="1679099148473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UnitCommitment$Solar_Plant_UC_Study.coverage" NAME="Solar Plant UC Study Coverage Results" MODIFIED="1680068974004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
