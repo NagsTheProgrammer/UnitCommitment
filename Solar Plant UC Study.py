@@ -19,14 +19,14 @@ def main():
 
     # Initializing Seasons, Days vectors
     # seasons = ['winter', 'spring', 'summer', 'fall']
-    seasons = ['summer']
+    seasons = ['fall']
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
     # STATIC VARIABLES
     # Active Power Min and Max and Ramping Limits
     # power = {"min": [0.15, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0],
              # "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]} # Original
-    power = {"min": [0, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0],
+    power = {"min": [0.15, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0],
              "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]}
 
     # Unit Costs
@@ -35,7 +35,7 @@ def main():
 
     # Line Power Flow Limitations
     # line = {"maxApPow": [1, 1], "admMag": [1, 1]} # Original
-    line = {"maxApPow": [3, 3], "admMag": [1, 1]} # Original
+    line = {"maxApPow": [2, 1], "admMag": [1, 1]} # Original
 
 
     # Reserve

@@ -29,6 +29,13 @@ def getGenData(season):
     df_AIL = pd.read_csv(dirName + fileName_AIL, skiprows=4)
     df_AIL = df_AIL.iloc[:-4,:]
 
+    # Solar Curtailment
+    # Min Thermal Generation Issue
+    ### write this so that the minimum difference between load and solar is at least 0.2, count # of times it needs to be clipped, return
+    ### df_U3.clip(0, num)
+    # Line Overloading
+    # harder to implement... maybe put this together by just increasing line pow and mention in suggestions
+
     # Renaming column headers
     df_U1 = df_U1.rename(columns={'MW': 'U1'})
     df_U2 = df_U2.rename(columns={'MW': 'U2'})
