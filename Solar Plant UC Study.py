@@ -8,6 +8,8 @@ import pandas as pd
 import math
 import itertools
 from DataPrep import *
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 def main():
 
@@ -16,46 +18,52 @@ def main():
     print_summary = True
 
     # Initializing Seasons, Days vectors
-    seasons = ['winter', 'spring', 'summer', 'fall']
+    # seasons = ['winter', 'spring', 'summer', 'fall']
+    seasons = ['summer']
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-    # *** temp
-    # s = 'winter'
+    # STATIC VARIABLES
+    # Active Power Min and Max and Ramping Limits
+    # power = {"min": [0.15, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0],
+             # "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]} # Original
+    power = {"min": [0, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0],
+             "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]}
+
+    # Unit Costs
+    # cost = {"fixed": [1, 1], "variable": [10, 20, 0], "startUp": [5, 2, 0], "shutDown": [1, 1, 0]} # Original
+    cost = {"fixed": [1, 1], "variable": [10, 20, 0], "startUp": [5, 2, 0], "shutDown": [1, 1, 0]}
+
+    # Line Power Flow Limitations
+    # line = {"maxApPow": [1, 1], "admMag": [1, 1]} # Original
+    line = {"maxApPow": [3, 3], "admMag": [1, 1]} # Original
+
+
+    # Reserve
+    reserve = 0.1
+
+    # Bus Voltage and Angle Limits
+    busVoltage = {"angMin": [-math.pi], "angMax": [math.pi]}
+
+    # Hour Zero Power Output and Generating Status
+    p1_0 = 0.7
+    p2_0 = 0.6
+    u1_0 = 1
+    u2_0 = 1
+    u3_0 = 0  # *** fix
 
     df_annual = pd.DataFrame(columns=['Season', 'Day', 'Hour', 'U1', 'U2', 'U3', 'Load', 'Dispatch Cost'])
     for s in seasons:
+        # Getting Seasonal Dataset
+        hourly_season = getGenData(s)
+
         df_season = pd.DataFrame(columns=['Season', 'Day', 'Hour', 'U1', 'U2', 'U3', 'Load', 'Dispatch Cost'])
         for d in days:
 
+            # Printing Study Details
+            print('Season: ' + s + ', Day: ' + d)
+
             # GETTING DATA
-            hourly_season = getGenData(s)
-            hourly_season_day = hourly_season[hourly_season["Day"] == 'Sunday']
-            # print(hourly_winter_sunday)
-
-            # STATIC VARIABLES
-            # Active Power Min and Max and Ramping Limits
-            power = {"min": [0.15, 0.2, 0], "max": [1.5, 1.5, 1.5], "rampDown": [0.2, 0.3, 0], "rampUp": [0.2, 0.3, 0], "shutDown": [0.2, 0.3, 0], "startUp": [0.2, 0.3, 0]}
-
-            # Unit Costs
-            cost = {"fixed": [3, 1], "variable": [10, 20 ,0], "startUp": [5, 2, 0], "shutDown": [1, 1, 0]}
-
-            # Line Power Flow Limitations
-            line = {"maxApPow": [1, 1], "admMag": [1, 1]}
-
-            # Reserve
-            reserve = 0.1
-
-            # print(hourly_winter_sunday.iloc[0]["Load"])
-
-            # Bus Voltage and Angle Limits
-            busVoltage = {"angMin": [-math.pi], "angMax": [math.pi]}
-
-            # Hour Zero Power Output and Generating Status
-            p1_0 = 0.7
-            p2_0 = 0.6
-            u1_0 = 1
-            u2_0 = 1
-            u3_0 = 0 # *** fix
+            hourly_season_day = hourly_season[hourly_season["Day"] == d]
             hours = len(hourly_season_day)
 
             # MODEL
@@ -70,7 +78,7 @@ def main():
             # Active Power Hourly Output
             model.p1 = Var(model.I, domain=NonNegativeReals) # Unit 1 Active Power Output
             model.p2 = Var(model.I, domain=NonNegativeReals) # Unit 2 Active Power Output
-            # model.p3 = Var(gen["UC3"], domain=NonNegativeReals) # Unit 3 Active Power Output
+            # model.p3 = Var(gen["U3"], domain=NonNegativeReals) # Unit 3 Active Power Output
 
             # Unit Generating Status Binary Variables
             model.u1 = Var(model.I, domain=Binary) # Unit 1 Generating Status
@@ -160,7 +168,7 @@ def main():
 
             # Line Flow Power Balance
             for i in range(hours):
-                model.cons.add(expr=model.p1[i] + hourly_season_day.iloc[i]["UC3"] == model.p13[i]) # Bus 1 Flow Balance
+                model.cons.add(expr=model.p1[i] + hourly_season_day.iloc[i]["U3"] == model.p13[i]) # Bus 1 Flow Balance
                 model.cons.add(expr=model.p2[i] == model.p23[i]) # Bus 2 Flow Balance
                 model.cons.add(expr=-hourly_season_day.iloc[i]["Load"] == model.p32[i] + model.p31[i]) # Bus 3 Flow Balance
 
@@ -206,8 +214,8 @@ def main():
                     print("\nLoad\t\t\t\t\t\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, hourly_season_day.iloc[i]["Load"]))
                     print("Unit 1 Power - Thermal (p1)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p1[i]()))
                     print("Unit 2 Power - Thermal (p2)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p2[i]()))
-                    print("Unit 3 Power - Solar (p3)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, hourly_season_day.iloc[i]["UC3"]))
-                    # print("Unit Power Total Output\t\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p1[i]() + model.p2[i]() + hourly_winter_sunday.iloc[i]["UC3"]))
+                    print("Unit 3 Power - Solar (p3)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, hourly_season_day.iloc[i]["U3"]))
+                    # print("Unit Power Total Output\t\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p1[i]() + model.p2[i]() + hourly_winter_sunday.iloc[i]["U3"]))
                     if not print_summary:
                         print("Line 13 Flow (p13)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p13[i]()))
                         print("Line 31 Flow (p31)\t\t\tHour %d\t\t%5.3f\t\tMW" % (i, model.p31[i]()))
@@ -224,7 +232,7 @@ def main():
                         print("Unit 2 Ramp-Down (z2)\t\tHour %d\t\t%5.3f" % (i, model.z2[i]()))
 
                 # Printing to Dataframe
-                row = {'Season': s, 'Day': d, 'Hour': i, 'U1': model.p1[i](), 'U2': model.p2[i](), 'U3': hourly_season_day.iloc[i]["UC3"], 'Load': hourly_season_day.iloc[i]["Load"], 'Dispatch Cost': dispatch_cost}
+                row = {'Season': s, 'Day': d, 'Hour': i, 'U1': model.p1[i](), 'U2': model.p2[i](), 'U3': hourly_season_day.iloc[i]["U3"], 'Load': hourly_season_day.iloc[i]["Load"], 'Dispatch Cost': dispatch_cost}
                 df_day.loc[len(df_day)] = row
 
             # Printing Dispatch Cost
@@ -234,10 +242,38 @@ def main():
             # Appending df_day to df_season
             df_season = pd.concat([df_season, df_day])
 
+        # Appending df_season to df_annual
         df_annual = pd.concat([df_annual, df_season])
+        df_annual.to_csv("unit_committment_" + s + "_output.csv")
 
-    print(df_annual.to_string())
-    df_annual.to_csv('UC Output.csv')
+    # Generating plots
+    day_key = {'Sunday': '2', 'Monday': '3', 'Tuesday': '4', 'Wednesday': '5', 'Thursday': '6', 'Friday': '7', 'Saturday': '8'}
+    list = []
+    for index, row in df_annual.iterrows():
+        list.append(day_key[row['Day']])
+    df_annual['Day'] = list
+    df_annual['timestamp'] = '2022-01-' + df_annual["Day"].astype(str).str.zfill(2) + '-' + df_annual["Hour"].astype(str).str.zfill(2)
+    df_annual["timestamp"] = pd.to_datetime(df_annual["timestamp"], format="%Y-%m-%d-%H")
+
+
+    df_season = df_annual[df_annual["Season"] == s]
+
+    fig, ax1 = plt.subplots(figsize=(10, 5))
+    ax1.set(xlabel='', ylabel='MW')
+    df_annual
+    ax1.plot(df_annual["timestamp"], df_annual.Load, color='g', label='Load')
+    ax1.plot(df_season["timestamp"], df_season.U1, color='b', label='Unit 1 - Thermal')
+    ax1.plot(df_season["timestamp"], df_season.U2, color='r', label='Unit 2 - Thermal')
+    ax1.plot(df_season["timestamp"], df_season.U3, color='y', label='Unit 3 - Solar')
+    ax1.legend()
+
+    ax1.xaxis.set(
+        major_locator=mdates.DayLocator(),
+        major_formatter=mdates.DateFormatter("\n\n%A"),
+        minor_locator=mdates.HourLocator((0, 12)),
+        minor_formatter=mdates.DateFormatter("%H"),
+    )
+    plt.show()
 
 if __name__ == "__main__":
     main()

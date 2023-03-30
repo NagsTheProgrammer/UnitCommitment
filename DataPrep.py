@@ -9,7 +9,7 @@ def getGenData(season):
 # def main():
 
     # temp settings
-    season = "winter"
+    # season = "winter"
     # season = "fall"
     # season = "spring"
     # season = "summer"
@@ -30,15 +30,11 @@ def getGenData(season):
     df_AIL = df_AIL.iloc[:-4,:]
 
     # Renaming column headers
-    df_U1 = df_U1.rename(columns={'MW': 'UC1'})
-    df_U2 = df_U2.rename(columns={'MW': 'UC2'})
-    df_U3 = df_U3.rename(columns={'MW': 'UC3'})
+    df_U1 = df_U1.rename(columns={'MW': 'U1'})
+    df_U2 = df_U2.rename(columns={'MW': 'U2'})
+    df_U3 = df_U3.rename(columns={'MW': 'U3'})
 
-    # Appending dataset
-    # for i in range(len(df_AIL["Date/Time"])):
-    #     if df_AIL["Date/Time"][i] != df_U1["Date/Time"][i]:
-    #         print(df_AIL["Date/Time"][i])
-
+    # Concatenating df's
     df = pd.DataFrame()
     df_list = [df_U2.iloc[:, 1], df_U3.iloc[:, 1], df_AIL.iloc[:, 1]]
     df = pd.concat([df_U1] + df_list, axis=1)
@@ -46,9 +42,6 @@ def getGenData(season):
     # Getting datetime objects
     df["Date/Time"] = pd.to_datetime(df["Date/Time"], format='%m/%d/%Y %H:%M')
     df.insert(1, 'Day', df['Date/Time'].dt.dayofweek)
-    # df.insert(0, 'Date', df["Date/Time"].dt.strftime('%m/%d/%Y'))
-    # df.insert(1, 'Time', pd.to_datetime(df["Date/Time"].dt.time, format='%H:%M'))
-    # df = df.drop(["Date/Time"], axis=1)
     df.set_index("Date/Time", inplace=True)
 
     # Filling NAN with 0
@@ -56,27 +49,36 @@ def getGenData(season):
 
     # Min-Max Normalizing
     df["Load"] = df["Load"]/(df["Load"].max())
-    df["UC1"] = (df["UC1"] - df["UC1"].min()) / (df["UC1"].max() - df["UC1"].min())
-    df["UC2"] = (df["UC2"] - df["UC2"].min()) / (df["UC2"].max() - df["UC2"].min())
-    df["UC3"] = (df["UC3"] - df["UC3"].min()) / (df["UC3"].max() - df["UC3"].min())
+    df["U1"] = (df["U1"] - df["U1"].min()) / (df["U1"].max() - df["U1"].min())
+    df["U2"] = (df["U2"] - df["U2"].min()) / (df["U2"].max() - df["U2"].min())
+    df["U3"] = (df["U3"] - df["U3"].min()) / (df["U3"].max() - df["U3"].min())
 
     # Scaling
     df["Load"] = df["Load"].apply(lambda x: x*2)
-    df["UC1"] = df["UC1"].apply(lambda x: x*1.5)
-    df["UC2"] = df["UC2"].apply(lambda x: x*1.5)
-    df["UC3"] = df["UC3"].apply(lambda x: x*1.5)
+    df["U1"] = df["U1"].apply(lambda x: x*1.5)
+    df["U2"] = df["U2"].apply(lambda x: x*1.5)
+    df["U3"] = df["U3"].apply(lambda x: x*1.5)
 
     # Setting seasons
     seasons = {
-        "winter": ("2022-01-01", "2022-02-28"),
-        "spring": ("2022-03-01", "2022-05-31"),
-        "summer": ("2022-06-01", "2022-08-31"),
-        "fall": ("2022-09-01", "2022-11-30")
+        "winter": ("2022-01-01", "2022-03-01"),
+        "spring": ("2022-03-01", "2022-06-01"),
+        "summer": ("2022-06-01", "2022-09-01"),
+        "fall": ("2022-09-01", "2022-12-01")
     }
 
     startDate = pd.to_datetime(seasons[season][0])
     endDate = pd.to_datetime(seasons[season][1])
-    df = df.loc[startDate:endDate]
+    df = df.loc[startDate:endDate] # *** append december
+    df = df[:-1]
+
+    # hourly_mean = pd.DataFrame(columns={'Day', 'Hour', 'Load', 'U1', 'U2', 'U3'})
+    # for t in range(24):
+    #     for d in range(7):
+    #         df = df.between_time(str(t).zfill(2) + ':00', str(t).zfill(2) + ':59')
+    #         df = df[df['Day'] == d]
+    #         row = {'Day': }
+    #         hourly_mean.loc[]
 
     hourly_mean = df.groupby(lambda idx: (idx.strftime("%H"), idx.strftime("%A"))).mean()
     hourly_mean[['Hour', 'Day']] = pd.DataFrame(hourly_mean.index.tolist(), index=hourly_mean.index)
@@ -84,8 +86,8 @@ def getGenData(season):
     cols = hourly_mean.columns.tolist()
     cols = cols[:1] + cols[-1:] + cols[4:5] + cols[1:-2]
     hourly_mean = hourly_mean[cols]
-    # hourly_mean = hourly_mean[hourly_mean["Day"] == 'Sunday']
-    # print(hourly_mean)
+
+    # hourly_mean.to_csv("hourly_mean_" + str(season) + "_output.csv")
 
     return hourly_mean
 
